@@ -1,16 +1,44 @@
+import { Component } from 'react';
 import './employees-list-item.css';
 
-const EmployeesListItem = ({ name, salary, increase }) => {
-  let classNames = 'list-group-item d-flex justify-content-between';
-
-  if (increase) {
-    classNames += ' increase';
+class EmployeesListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      increase: false,
+      rise: false,
+    };
   }
 
-  // prettier-ignore
-  return (
+  OnIncrease = () => {
+    this.setState(({ increase }) => ({
+      increase: !increase,
+    }));
+  };
+
+  onRise = () => {
+    this.setState(({ rise }) => ({
+      rise: !rise,
+    }));
+  };
+
+  render() {
+    const { name, salary } = this.props;
+    const { increase, rise } = this.state;
+    let classNames = 'list-group-item d-flex justify-content-between';
+
+    if (increase) {
+      classNames += ' increase';
+    }
+
+    if (rise) {
+      classNames += ' like';
+    }
+
+    // prettier-ignore
+    return (
     <li className={classNames}>
-      <span className='list-group-item-label'>{name}</span>
+      <span className='list-group-item-label' onClick={this.onRise}>{name}</span>
       <input
         type='text'
         className='list-group-item-input'
@@ -19,7 +47,9 @@ const EmployeesListItem = ({ name, salary, increase }) => {
       <div className='d-flex justify-content-center align-items-center'>
 				<button
 					type='button'
-					className='btn-cookie btn-sm '>
+          className='btn-cookie btn-sm '
+          onClick={this.OnIncrease}
+          >
           <i className='fas fa-cookie'></i>
         </button>
 
@@ -32,6 +62,7 @@ const EmployeesListItem = ({ name, salary, increase }) => {
       </div>
     </li>
   );
-};
+  }
+}
 
 export default EmployeesListItem;

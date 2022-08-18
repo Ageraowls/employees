@@ -8,19 +8,19 @@ import './app.css';
 function App() {
   const data = [
     {
-      id: 0,
+      id: 1,
       name: 'John C.',
       salary: 800,
       increase: false,
     },
     {
-      id: 0,
+      id: 2,
       name: 'Alex W.',
       salary: 3000,
       increase: true,
     },
     {
-      id: 0,
+      id: 3,
       name: 'Peter P.',
       salary: 3300,
       increase: false,
