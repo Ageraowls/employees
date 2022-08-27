@@ -18,18 +18,21 @@ class App extends Component {
           name: 'John C.',
           salary: 800,
           increase: false,
+          rise: true,
         },
         {
           id: 2,
           name: 'Alex W.',
           salary: 3000,
           increase: true,
+          rise: false,
         },
         {
           id: 3,
           name: 'Peter P.',
           salary: 3300,
           increase: false,
+          rise: false,
         },
       ],
     };
@@ -58,6 +61,7 @@ class App extends Component {
       name,
       salary,
       increase: false,
+      rise: false,
       id: this.maxId++,
     };
 
@@ -69,15 +73,55 @@ class App extends Component {
     });
   };
 
+  onToggleProp = (id, prop) => {
+    /* this.setState(({ data }) => {
+      const index = data.findIndex((elem) => elem.id === id);
+
+      const old = data[index];
+      const newItem = { ...old, increase: !old.increase };
+      const newArray = [
+        ...data.slice(0, index),
+        newItem,
+        ...data.slice(index + 1),
+      ];
+
+      return {
+        data: newArray,
+      };
+    }); */
+
+    this.setState(({ data }) => ({
+      data: data.map((item) => {
+        if (item.id === id) {
+          return { ...item, [prop]: !item[prop] };
+        }
+
+        return item;
+      }),
+    }));
+  };
+
   render() {
+    const employees = this.state.data.length;
+    // prettier-ignore
+    const increased = this.state.data.filter((item) => item.increase === true).length;
+
     return (
+      // prettier-ignore
       <div className='app'>
-        <AppInfo />
+        <AppInfo
+          employees={employees}
+          increased={increased}
+        />
         <div className='search-panel'>
           <SearchPanel />
           <AppFilter />
         </div>
-        <EmployeesList data={this.state.data} onDelete={this.deleteItem} />
+        <EmployeesList
+          data={this.state.data}
+          onDelete={this.deleteItem}
+          onToggleProp={this.onToggleProp}
+        />
         <EmployeesAddForm onAddItem={this.addItem} />
       </div>
     );
